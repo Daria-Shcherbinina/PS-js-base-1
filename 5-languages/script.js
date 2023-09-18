@@ -2,7 +2,7 @@
     Выводим приветствие пользователю в зависимости от переданного языка
  */
 
-let lang = 'de';
+let lang = prompt('Выберите язык (например, ru/en/de и т.д.)', 'ru');
 
 switch (lang) {
     case 'ru':
@@ -14,5 +14,6 @@ switch (lang) {
     case 'de':
         console.log('Gutten tag!');
         break;
-}
 
+    default: console.log('Hello!');
+}
