@@ -7,26 +7,136 @@
    Ставки конвертации хранятся внутри функции.
  */
 
-function converter(sum, fromCurrency, toCurrency) {
-    const rateRUB = 1;
+//ВАРИАНТ КОНВЕРТЕРА, ЕСЛИ НАПИСАТЬ НЕСКОЛЬКО ФУНКЦИЙ (не понятно по заданию можно ли так)
+function subConvert(sum, currency, type)
+{
     const rateUSD = 96.65;
     const rateEUR = 103.09;
     const rateCNY = 13.24;
 
-    if(fromCurrency !== toCurrency && fromCurrency === 'RUB'){
-        switch (true) {
-            case toCurrency === 'USD':
-                return (sum / rateUSD).toFixed(2);
-            case toCurrency === 'EUR':
-                return (sum / rateEUR).toFixed(2);
-            case toCurrency === 'CNY':
-                return (sum / rateCNY).toFixed(2);
-            default:
-                return null;
-        }
-    }else{
-        return sum.toFixed(2);
+    let sumReturn = 0;
+
+    switch (currency)
+    {
+        case 'RUB':
+            sumReturn = sum;
+            break;
+        case 'USD':
+            sumReturn = (type == 'fromRub') ? sum / rateUSD : sum * rateUSD;
+            break;
+        case 'EUR':
+            sumReturn = (type == 'fromRub') ? sum / rateEUR : sum * rateEUR;
+            break;
+        case 'CNY':
+            sumReturn = (type == 'fromRub') ? sum / rateCNY : sum * rateCNY;
+            break;
     }
+
+    return sumReturn;
 }
 
-console.log(converter(500, 'RUB', 'CNY'));
+function converter1(sum, fromCurrency, toCurrency)
+{
+    if(fromCurrency == toCurrency)
+        return sum.toFixed(2);
+
+    if(fromCurrency != 'RUB')
+        sum = subConvert(sum, fromCurrency, 'toRub');
+
+    sum = subConvert(sum, toCurrency, 'fromRub');
+
+    if(sum <= 0)
+        return null;
+    else
+        return sum.toFixed(2);
+}
+
+//ВАРИАНТ КОНВЕРТЕРА, ЕСЛИ ДЕЛАТЬ ОДНОЙ ФУНКЦИЕЙ
+function converter2(sum, fromCurrency, toCurrency)
+{
+    const rateUSD = 96.65;
+    const rateEUR = 103.09;
+    const rateCNY = 13.24;
+
+    let sumNew = 0;
+
+    if(fromCurrency == toCurrency)
+        return sum.toFixed(2);
+
+    switch (fromCurrency)
+    {
+        case 'RUB':
+            //из RUB в другие валюты
+            switch (toCurrency)
+            {
+                case 'USD':
+                    sumNew = (sum / rateUSD);
+                    break;
+                case 'EUR':
+                    sumNew = (sum / rateEUR);
+                    break;
+                case 'CNY':
+                    sumNew = (sum / rateCNY);
+                    break;
+            }
+            break;
+
+        case 'USD':
+            //из USD в другие валюты
+            switch (toCurrency)
+            {
+                case 'EUR':
+                    sumNew = (sum * rateUSD / rateEUR);
+                    break;
+                case 'CNY':
+                    sumNew = (sum * rateUSD / rateCNY);
+                    break;
+                case 'RUB':
+                    sumNew = (sum * rateUSD);
+                    break;
+            }
+            break;
+
+        case 'EUR':
+            // из EUR в другие валюты
+            switch (toCurrency)
+            {
+                case 'USD':
+                    sumNew = (sum * rateEUR / rateUSD);
+                    break;
+                case 'CNY':
+                    sumNew = (sum * rateEUR / rateCNY);
+                    break;
+                case 'RUB':
+                    sumNew = (sum * rateEUR);
+                    break;
+            }
+            break;
+
+        case 'CNY':
+            // из CNY в другие валюты
+            switch (toCurrency)
+            {
+                case 'USD':
+                    sumNew = (sum * rateCNY / rateUSD);
+                    break;
+                case 'EUR':
+                    sumNew = (sum * rateCNY / rateEUR);
+                    break;
+                case 'RUB':
+                    sumNew = (sum * rateCNY);
+                    break;
+            }
+            break;
+
+        default:
+            return null;
+    }
+
+    return sumNew.toFixed(2);
+}
+
+console.log(converter1(500, 'USD', 'EUR'));
+console.log(converter2(500, 'USD', 'EUR'));
+
+
