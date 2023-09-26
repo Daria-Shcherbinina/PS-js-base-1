@@ -13,9 +13,6 @@ function arSort(arr)
 {
     for (let i = arr.length -1; i >= 0; i--)
     {
-
-        console.log(arr[i]);
-
         for (let j = i; j >= 0; j--)
         {
             if (arr[i] < arr[j])
@@ -26,7 +23,6 @@ function arSort(arr)
                 arr[i] = arElJ;
                 arr[j] = arElI;
             }
-
         }
     }
     return arr;
