@@ -5,10 +5,10 @@
     - isDrunk - пьян.
  */
 
-let age = 25;
-let hasLicence = true;
-let isDrunk = false;
+const age = 25;
+const hasLicence = true;
+const isDrunk = false;
 
-let canDrive = age >= 18 && hasLicence && !isDrunk;
+const canDrive = age >= 18 && hasLicence && !isDrunk;
 
 console.log(`Водитель управлять авто ${canDrive ? 'может' : 'не может'}.`);
