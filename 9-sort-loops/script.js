@@ -18,9 +18,8 @@ function arSort(arr)
             if (arr[i] < arr[j])
             {
                 let arElI = arr[i];
-                let arElJ = arr[j];
 
-                arr[i] = arElJ;
+                arr[i] = arr[j];
                 arr[j] = arElI;
             }
         }
