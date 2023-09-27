@@ -136,7 +136,56 @@ function converter2(sum, fromCurrency, toCurrency)
     return sumNew.toFixed(2);
 }
 
-console.log(converter1(500, 'USD', 'EUR'));
-console.log(converter2(500, 'USD', 'EUR'));
+//ВАРИАНТ 3
+const currencyConverter = (amount, from, to) => {
 
+    const rateUSD = 96.65;
+    const rateEUR = 103.09;
+    const rateCNY = 13.24;
 
+    switch (`${from}/${to}`) {
+
+        case 'RUB/USD':
+            return amount / rateUSD;
+        case 'RUB/EUR':
+            return amount * rateEUR;
+        case 'RUB/CNY':
+            return amount * rateCNY;
+        case 'RUB/RUB':
+            return amount;
+
+        case 'USD/RUB':
+            return amount * rateUSD;
+        case 'USD/EUR':
+            return amount * rateUSD / rateEUR;
+        case 'USD/CNY':
+            return amount * rateUSD / rateCNY;
+        case 'USD/USD':
+            return amount;
+
+        case 'EUR/RUB':
+            return amount / rateEUR;
+        case 'EUR/USD':
+            return amount * rateEUR / rateUSD;
+        case 'EUR/CNY':
+            return amount * rateEUR / rateCNY;
+        case 'EUR/EUR':
+            return amount;
+
+        case 'CNY/RUB':
+            return amount / rateCNY;
+        case 'CNY/USD':
+            return amount * rateCNY / rateUSD;
+        case 'CNY/EUR':
+            return amount * rateCNY / rateEUR;
+        case 'CNY/CNY':
+            return amount;
+
+        default:
+            return null;
+    }
+}
+
+console.log(converter1(24000, 'CNY', 'EUR'));
+console.log(converter2(24000, 'CNY', 'EUR'));
+console.log(currencyConverter(24000, 'CNY', 'EUR'))
