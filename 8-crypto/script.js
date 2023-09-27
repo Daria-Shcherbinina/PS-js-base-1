@@ -14,7 +14,7 @@ function crypto(password)
     const userPassword = password.split('');
 
     //ПЕРВЫЙ этап кодировки: выделяю чётные и нечётные элементы массива
-    const evenIndexAr = userPassword.filter((item, index, array) => index % 2-1); //собираю чётные элементы массива
+    const evenIndexAr = userPassword.filter((item, index, array) => !(index % 2)); //собираю чётные элементы массива
     const oddIndexAr = userPassword.filter((item, index, array) => index % 2); //собираю нечётные элементы массива
     let firstCrypto = evenIndexAr.concat(oddIndexAr);
 
@@ -50,6 +50,53 @@ function checkPass(cryptoRes, password){
 }
 
 const cryptoRes = crypto('ПриВет12YR');
-
 console.log(cryptoRes);
-console.log(checkPass(cryptoRes, 'ЗриВет12YR'));
+console.log(checkPass(cryptoRes, 'ПриВет12YR'));
+
+
+// ФУНКЦИЯ ШИФРОВКИ ПАРОЛЯ - 2
+function crypto2(password)
+{
+    //Записываю в массив полученный пароль
+    const userPassword = password.split('');
+
+    //ПЕРВЫЙ этап: записываю пароль наоборот
+    const cryptoPass1 = userPassword.reverse();
+
+    //ВТОРОЙ этап: вырезаю первые два элемента массива и меняю их местами
+    const cryptoPass2 = cryptoPass1.splice(0, 2).reverse();
+
+    //ТРЕТИЙ этап: соединяю массивы
+    const cryptoPassRes = cryptoPass1.concat(cryptoPass2);
+
+    return cryptoPassRes.join('');
+}
+
+// ФУНКЦИЯ ОБРАТНОГО ДЕЙСТВИЯ
+function checkPass2(crypto2Res, password){
+
+    // Записываю в массив зашифрованный пароль
+    const cryptoPass = crypto2Res.split('');
+
+    //ПЕРВЫЙ этап: вырезаю два последних элемента массива
+    const deCryptoPass1 = cryptoPass.splice( -2, 2);
+
+    //ВТОРОЙ этап: меняю порядок модифицированного массива
+    const deCryptoPass2 = cryptoPass.reverse();
+
+    //ТРЕТИЙ этап: соединяю массивы
+    const deCryptoPassRes = deCryptoPass2.concat(deCryptoPass1).join('');
+
+    if(password == deCryptoPassRes){
+        return true;
+    }
+    else
+        return false;
+}
+
+const crypto2Res = crypto2('Привет123');
+
+
+console.log(crypto2('Привет123'));
+console.log(checkPass2(crypto2Res, 'Привет223'));
+
